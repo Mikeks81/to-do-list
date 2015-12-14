@@ -76,6 +76,10 @@ body {
 	box-shadow: 0px 10px 25px #888888;
 }
 
+.hover {
+	background-color: #80f7ed;
+}
+
 h1 {
 	text-align: center;
 	padding-top: 15px;
@@ -88,10 +92,26 @@ h4 {
 #to_do_list form {
 	width: 100%;
 	margin-top: 50px;
-	margin-left: 60px
+	margin-left:100px
+}
+
+#list {
+	margin-left: 60px;
+}
+
+#list ul{
+	list-style: none;
+}
+
+#list span:hover {
+	background-color: #80f7ed;
 }
 
 #input {
 	width: 200px;
+}
+
+#user_interaction {
+	margin-top: 10px;
 }
 

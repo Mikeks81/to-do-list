@@ -10,24 +10,19 @@ $(document).ready(
 		var day = date.getDate(); // numerical form of day of the month
 		var month = date.getMonth(); // numerical form of month of the year
 		var year = date.getFullYear(); // full 4 digit numerical form of year
-		var date_of_list = (months[month]+ " " + day + ", " + year) // instance date of list
-		$("h4").text(date_of_list); //the value of month displays item in months Array to screen
+		var dateOfList = (months[month]+ " " + day + ", " + year) // instance date of list
+		$("h4").text(dateOfList); //the value of month displays item in months Array to screen
 
-
-		// ############## Item Hover ###############################
-
-
-
-		// ################# ADDING AND DELETING ITEMS ###############
+		// ################# ADDING ITEMS ###############
 
 		$("#add_button").on('click', // on add_button click 
 			function(e){
 				e.preventDefault();  // prevents add button from refreshing page
 				var counter =  0
 				var id = ("item" + counter) // unique id's for checkboxes
-				var user_input = $("#input").val(); // value from input field
+				var userInput = $("#input").val(); // value from input field
 				
-				if  (user_input === ""){ // if #input is blank
+				if  (userInput === ""){ // if #input is blank
 					$("#confirmation_box").fadeIn(100);
 					$("#confirm_ok").show();
 					$("#confirm_yes").hide();
@@ -40,30 +35,35 @@ $(document).ready(
 					return false
 				}
 				else {
-				$("#list").append('<span><input type="checkbox" id="item">' + user_input + '</input><br>'); // adds new checkbox 
-				counter++ // trying to add to var counter 
+					$("#list").append('<span><input type="checkbox"/>' + userInput + '<br>'); // adds new checkbox 
+					counter++ // trying to add to var counter 
 				}
 				// $("#list").find("input").attr("id",id);//trying to get unique id's to inpputs
 				$("#input").val("");// clears #input
 
 		});		
 
+		// ###################### SELECTING ITEMS #####################
+
+		$("#list input:checkbox")
+
+		// ######################## DELETING ITEMS ####################
 
 		$("#delete_button").on("click", 
 			function(e){
 				e.preventDefault(); // cancel page refresh on click
 				$("#confirm_ok").hide();
 				$("#confirm_msg").text("Are you sure you sure you want to delete last item?");
-				$("#confirmation_box").fadeIn(100);
-				$("#confirm_yes").on("click",
-					function(){
-						$("#list span").last().remove();
-						$("#confirmation_box").fadeOut(100);
-				});
-				$("#confirm_no").on("click",
-					function(){
-						$("#confirmation_box").fadeOut(100);
-				});
+				$("#confirmation_box").fadeIn(100); // show confirm box
+				//$("#confirm_yes").on("click", // on click of confirm button yes
+				// 	function(){	
+				// 		$("#list span").last().remove(); // remove last item in list
+				// 		$("#confirmation_box").fadeOut(100); // hide confirm box
+				// });
+				// $("#confirm_no").on("click", // if no on delete hide confirm box
+				// 	function(){
+				// 		$("#confirmation_box").fadeOut(100);
+				// });
 				
 
 
@@ -102,4 +102,14 @@ $(document).ready(
 
 
 		});
+		
+		$("#confirm_yes").on("click", // on click of confirm button yes
+			function(){	
+				$("#list span").last().remove(); // remove last item in list
+				$("#confirmation_box").fadeOut(100); // hide confirm box
+		});
+		$("#confirm_no").on("click", // if no on delete hide confirm box
+			function(){
+				$("#confirmation_box").fadeOut(100);
+		});		
 });
