@@ -15,19 +15,18 @@ $(document).ready(
 			function(e){
 				e.preventDefault();  // prevents add button from refreshing page
 				var counter =  0
-				var id = ("item" + counter) // unique id's for checkboxes
+				var id = ("item") // unique id's for checkboxes
 				var user_input = $("#input").val(); // value from input field
 				
-
 				if  (user_input === ""){ // if #input is blank
-					alert("Enter text!");
+					$("#confirmation_box").show();
+					$("#confirm_msg").text("Enter text!");
 					return false
 				}
 				else {
-				$("#list").append('<input type="checkbox">' + user_input + '</input></br>'); // adds new checkbox 
+				$("#list").append('<span><input type="checkbox" id="item">' + user_input + '</input><br>'); // adds new checkbox 
 				counter++ // trying to add to var counter 
 				}
-
 				$("#list").find("input").attr("id",id);//trying to get unique id's to inpputs
 				$("#input").val("");// clears #input
 
@@ -38,16 +37,41 @@ $(document).ready(
 			function(e){
 				e.preventDefault(); // cancel page refresh on click
 				console.log("GOT HERE1");
-				var find_input = $("#list").find("input") // finds all inputs created in #list
-				var selected_inputs = $("#list").find("input").prop("checked") //directs to #list inputs that are true
-				if (selected_inputs == true) { 
-					console.log("GOT HERE2");
-					var answer = prompt("Sare you sure you want to delete items? Type yes or no");
-						if (answer == "yes"){ 
-							console.log("GOT HERE3");
-							$(selected_inputs).hide(); // doesn't hide anything even the first selection that is recognized as true.
-						}
-				}	
+				$("#list span").last().remove();
+
+
+				// ##################
+				// var user_confirm = $("#confirm_msg").text("Are you sure you sure you want to delete items?");
+				// var find_input = $("#list").find("input"); // finds all inputs created in #list
+				// var selected_inputs = $("#list").find("input").prop("checked"); //directs to #list inputs that are true
+				// $("#item").last();
+
+
+				// console.log(selected_inputs);
+				// 	if (selected_inputs == true) {
+
+				// 	}
+
+
+
+				//############# using custom prompt confirmation #########
+				// if (selected_inputs == true) { 
+				// 	console.log("GOT HERE2");// ##################
+				// 	$("#confirm_msg").text("Are you sure you sure you want to delete items?");
+				// 	$("#confirmation_box").fadeIn();
+				// 	console.log("GOT HERE 2.5!!");
+				// 		 if ($("#confirm_no").on("click")) { //press of no button
+				// 		 		$("#confirmation_box").hide();
+				// 		 } 
+				// 		else if ($("#confirm_yes").on("click")) { //press of yes button
+				// 					console.log("GOT HERE3");// ##################
+				// 					$(selected_inputs).hide(); // doesn't hide anything even the first selection that is recognized as true.????
+				// 		}
+
+				// }
+				// else {
+
+				// }	
 
 
 		});
