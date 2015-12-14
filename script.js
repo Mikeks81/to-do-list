@@ -45,67 +45,25 @@ $(document).ready(
 
 		// ###################### SELECTING ITEMS #####################
 
-		$("#list input:checkbox")
+		var amountChecked = $("#list input:checked").length; // code won't work out herer.... some scoping issue i don't understand
 
 		// ######################## DELETING ITEMS ####################
 
 		$("#delete_button").on("click", 
 			function(e){
+				var amountChecked = $("#list input:checked").length; // number of to be deleted.
 				e.preventDefault(); // cancel page refresh on click
 				$("#confirm_ok").hide();
-				$("#confirm_msg").text("Are you sure you sure you want to delete last item?");
+				$("#confirm_msg").text("Are you sure you sure you want to delete these " +amountChecked+ " item(s)?");
 				$("#confirmation_box").fadeIn(100); // show confirm box
-				//$("#confirm_yes").on("click", // on click of confirm button yes
-				// 	function(){	
-				// 		$("#list span").last().remove(); // remove last item in list
-				// 		$("#confirmation_box").fadeOut(100); // hide confirm box
-				// });
-				// $("#confirm_no").on("click", // if no on delete hide confirm box
-				// 	function(){
-				// 		$("#confirmation_box").fadeOut(100);
-				// });
-				
-
-
-				// ##################
-				// var user_confirm = $("#confirm_msg").text("Are you sure you sure you want to delete items?");
-				// var find_input = $("#list").find("input"); // finds all inputs created in #list
-				// var selected_inputs = $("#list").find("input").prop("checked"); //directs to #list inputs that are true
-				// $("#item").last();
-
-
-				// console.log(selected_inputs);
-				// 	if (selected_inputs == true) {
-
-				// 	}
-
-
-
-				//############# using custom prompt confirmation #########
-				// if (selected_inputs == true) { 
-				// 	console.log("GOT HERE2");// ##################
-				// 	$("#confirm_msg").text("Are you sure you sure you want to delete items?");
-				// 	$("#confirmation_box").fadeIn();
-				// 	console.log("GOT HERE 2.5!!");
-				// 		 if ($("#confirm_no").on("click")) { //press of no button
-				// 		 		$("#confirmation_box").hide();
-				// 		 } 
-				// 		else if ($("#confirm_yes").on("click")) { //press of yes button
-				// 					console.log("GOT HERE3");// ##################
-				// 					$(selected_inputs).hide(); // doesn't hide anything even the first selection that is recognized as true.????
-				// 		}
-
-				// }
-				// else {
-
-				// }	
 
 
 		});
 		
 		$("#confirm_yes").on("click", // on click of confirm button yes
 			function(){	
-				$("#list span").last().remove(); // remove last item in list
+				$("#list input:checked").parent().remove();
+				$("#list input:checked").remove(); // remove selected items in list
 				$("#confirmation_box").fadeOut(100); // hide confirm box
 		});
 		$("#confirm_no").on("click", // if no on delete hide confirm box
