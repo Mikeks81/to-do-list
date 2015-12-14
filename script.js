@@ -1,6 +1,8 @@
 $(document).ready(
 	function(){
 
+		// ################### DATE ############################
+
 		var months = ["January","February","March","April",
 						"May","June","July","August","September",
 						"October","November","December"]
@@ -11,23 +13,37 @@ $(document).ready(
 		var date_of_list = (months[month]+ " " + day + ", " + year) // instance date of list
 		$("h4").text(date_of_list); //the value of month displays item in months Array to screen
 
+
+		// ############## Item Hover ###############################
+
+
+
+		// ################# ADDING AND DELETING ITEMS ###############
+
 		$("#add_button").on('click', // on add_button click 
 			function(e){
 				e.preventDefault();  // prevents add button from refreshing page
 				var counter =  0
-				var id = ("item") // unique id's for checkboxes
+				var id = ("item" + counter) // unique id's for checkboxes
 				var user_input = $("#input").val(); // value from input field
 				
 				if  (user_input === ""){ // if #input is blank
-					$("#confirmation_box").show();
+					$("#confirmation_box").fadeIn(100);
+					$("#confirm_ok").show();
+					$("#confirm_yes").hide();
+					$("#confirm_no").hide();
 					$("#confirm_msg").text("Enter text!");
+					$("#confirm_ok").on("click",
+						function(){
+							$("#confirmation_box").fadeOut(100);
+						});
 					return false
 				}
 				else {
 				$("#list").append('<span><input type="checkbox" id="item">' + user_input + '</input><br>'); // adds new checkbox 
 				counter++ // trying to add to var counter 
 				}
-				$("#list").find("input").attr("id",id);//trying to get unique id's to inpputs
+				// $("#list").find("input").attr("id",id);//trying to get unique id's to inpputs
 				$("#input").val("");// clears #input
 
 		});		
@@ -36,8 +52,19 @@ $(document).ready(
 		$("#delete_button").on("click", 
 			function(e){
 				e.preventDefault(); // cancel page refresh on click
-				console.log("GOT HERE1");
-				$("#list span").last().remove();
+				$("#confirm_ok").hide();
+				$("#confirm_msg").text("Are you sure you sure you want to delete last item?");
+				$("#confirmation_box").fadeIn(100);
+				$("#confirm_yes").on("click",
+					function(){
+						$("#list span").last().remove();
+						$("#confirmation_box").fadeOut(100);
+				});
+				$("#confirm_no").on("click",
+					function(){
+						$("#confirmation_box").fadeOut(100);
+				});
+				
 
 
 				// ##################
