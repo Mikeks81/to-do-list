@@ -13,61 +13,101 @@ $(document).ready(
 		var dateOfList = (months[month]+ " " + day + ", " + year) // instance date of list
 		$("h4").text(dateOfList); //the value of month displays item in months Array to screen
 
+		// ################# FUNCTIONS!!! #####################
+
+		function yes(){
+			$("#confirm_yes").on("click", // on click of confirm button yes *** thinking i can make this a function to be called with select all
+				function(){	
+					$("#list input:checked").parent().remove(); // removes the span tags that surround the input
+					$("#list input:checked").remove(); // remove selected items in list
+					$("#confirmation_box").fadeOut(100); // hide confirm box
+			});
+		}
+
+		function no(){
+			$("#confirm_no").on("click", // if no on delete hide confirm box
+				function(){
+					$("#confirmation_box").fadeOut(100);
+			});	
+		}
+
+		function ok(){
+			$("#confirm_ok").on("click", // on click of OK button do function
+				function(){
+					$("#confirmation_box").fadeOut(100);
+				});
+		}
+
+		function okBox(){
+			$("#confirm_ok").show();
+			$("#confirm_yes").hide(); 
+			$("#confirm_no").hide();
+			$("#confirmation_box").fadeIn(100); 
+		}
+
+		function yesNoBox(){
+			$("#confirm_ok").hide();
+			$("#confirm_yes").show(); 
+			$("#confirm_no").show();
+			$("#confirmation_box").fadeIn(100);  
+		}
+
+
 		// ################# ADDING ITEMS ###############
 
 		$("#add_button").on('click', // on add_button click 
 			function(e){
 				e.preventDefault();  // prevents add button from refreshing page
-				var counter =  0
-				var id = ("item" + counter) // unique id's for checkboxes
 				var userInput = $("#input").val(); // value from input field
 				
 				if  (userInput === ""){ // if #input is blank
-					$("#confirmation_box").fadeIn(100);
-					$("#confirm_ok").show();
-					$("#confirm_yes").hide();
-					$("#confirm_no").hide();
-					$("#confirm_msg").text("Enter text!");
-					$("#confirm_ok").on("click",
-						function(){
-							$("#confirmation_box").fadeOut(100);
-						});
+					okBox();
+					$("#confirm_msg").text("Enter text!"); // DOM manip 
+					ok()
 					return false
 				}
 				else {
 					$("#list").append('<span><input type="checkbox"/>' + userInput + '<br>'); // adds new checkbox 
-					counter++ // trying to add to var counter 
 				}
-				// $("#list").find("input").attr("id",id);//trying to get unique id's to inpputs
 				$("#input").val("");// clears #input
 
 		});		
-
-		// ###################### SELECTING ITEMS #####################
-
-		var amountChecked = $("#list input:checked").length; // code won't work out herer.... some scoping issue i don't understand
 
 		// ######################## DELETING ITEMS ####################
 
 		$("#delete_button").on("click", 
 			function(e){
-				var amountChecked = $("#list input:checked").length; // number of to be deleted.
 				e.preventDefault(); // cancel page refresh on click
-				$("#confirm_ok").hide();
-				$("#confirm_msg").text("Are you sure you sure you want to delete these " +amountChecked+ " item(s)?");
-				$("#confirmation_box").fadeIn(100); // show confirm box
-
-
+				var amountChecked = $("#list input:checked").length; // number of to be deleted.
+				if (amountChecked == 0) {
+					okBox();
+					$("#confirm_msg").text("Please Select an entry to delete.");
+					ok();
+				}
+				else{
+					yesNoBox()
+					$("#confirm_msg").text("Are you sure you sure you want to delete these " +amountChecked+ " item(s)?");
+					yes();
+					no();
+				}
 		});
-		
-		$("#confirm_yes").on("click", // on click of confirm button yes
-			function(){	
-				$("#list input:checked").parent().remove();
-				$("#list input:checked").remove(); // remove selected items in list
-				$("#confirmation_box").fadeOut(100); // hide confirm box
-		});
-		$("#confirm_no").on("click", // if no on delete hide confirm box
-			function(){
-				$("#confirmation_box").fadeOut(100);
-		});		
+
+		$("#select_all").on("click",
+			function(e){
+				e.preventDefault();
+				$("#list input").attr("checked",true);
+				var amountChecked = $("#list input:checked").length;// number of checked again
+				if (amountChecked == 0){
+					$("#confirm_msg").text("You have no entries to delete!");
+					okBox();
+					ok()
+				}
+				else{
+					$("#confirm_msg").text("Would you like to delete all entries?");
+					yesNoBox();
+					yes();
+					no();
+				}
+
+			});
 });
