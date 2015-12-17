@@ -63,7 +63,7 @@ $(document).ready(
 				if  (userInput === ""){ // if #input is blank
 					okBox();
 					$("#confirm_msg").text("Enter text!"); // DOM manip 
-					ok()
+					ok();
 					return false
 				}
 				else {
@@ -73,6 +73,19 @@ $(document).ready(
 
 		});		
 
+		// ############## SELECTED ITEMS #####################
+		// Trying to get selected to be highlighted with hover color
+
+		// $("#list input:checked").change(
+		// 	function(){
+		// 	if ($("#list input:checked").attr("checked",true));{
+		// 		$("#list input:checked").parent().css("background-color", "rgba(150, 176, 186, .3)");
+		// 	}
+		// 	else {
+		// 		$("#list input:checked").parent().css("background-color", "rgba(150, 176, 186,0)");
+		// 	}
+		// });	
+		
 		// ######################## DELETING ITEMS ####################
 
 		$("#delete_button").on("click", 
@@ -100,7 +113,7 @@ $(document).ready(
 				if (amountChecked == 0){
 					$("#confirm_msg").text("You have no entries to delete!");
 					okBox();
-					ok()
+					ok();
 				}
 				else{
 					$("#confirm_msg").text("Would you like to delete all entries?");
